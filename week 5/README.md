@@ -1,16 +1,36 @@
-# React + Vite
+# todo-26
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The reference to-do app for **Technical Interaction Design**, ITU, Autumn 2026 — built
+live, in the lectures. Your team forks it in week 3.
 
-Currently, two official plugins are available:
+## Getting the app from a particular lecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Every lecture ends with a tag, so you can check out the app exactly as it stood when you
+walked out of the room:
 
-## React Compiler
+```bash
+git clone https://github.com/itu-tid/todo-26.git
+cd todo-26
+git checkout week-01
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+`git checkout main` takes you back to the latest, and `git tag` lists every week that
+exists so far. If you switch between tags, run `npm install` again — the dependencies
+change as the course goes on.
 
-## Expanding the ESLint configuration
+### What is in week-01
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Components, props, `children`, and rendering a list with keys. **Add** is wired up but only
+logs — making it actually add something needs state, which is lecture 2.
+
+The commits inside a week are the live coding as it happened, warts and dead ends
+included. The **tag** is applied afterwards, once it has been tidied — so the commits show
+you the process and the tag shows you the version worth reading.
+
+## The notes
+
+Written up at [itu-tid.github.io](https://github.com/itu-tid/itu-tid.github.io#readme),
+with each week also bundled as a PDF at
+[itu-tid.github.io/lecture-notes-pdf](https://itu-tid.github.io/lecture-notes-pdf/).

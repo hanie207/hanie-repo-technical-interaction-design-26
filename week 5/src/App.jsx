@@ -1,33 +1,50 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
-import ToDoList from './ToDoList.jsx'
-import ToDoPanel from './ToDoPanel.jsx'
-import Parse from 'parse';
+import "./App.css";
+import ToDoList from "./ToDoList.jsx";
+import { useState } from "react";
 
-Parse.initialize("f2rDrJMWbZWKDgnqtqHlIG31zWpU61rZNiueowUq", "Mdb9LvzSeGFLNxlVKkUaA4y4heEf7i0nqtpzac9M");
-Parse.serverURL = 'https://your-parse-server.com/parse';
+import Parse from "parse";
+import AuthPage from "./AuthPage.jsx";
 
+// Credentials come from .env.local, which is gitignored.
+// Copy .env.example to .env.local and fill in your own Back4App values.
+if (!import.meta.env.VITE_PARSE_APP_ID) {
+  throw new Error(
+    "No Parse credentials. Copy .env.example to .env.local, fill it in, and restart `npm run dev`.",
+  );
+}
+
+Parse.serverURL = import.meta.env.VITE_PARSE_SERVER_URL;
+Parse.initialize(
+  import.meta.env.VITE_PARSE_APP_ID,
+  import.meta.env.VITE_PARSE_JS_KEY,
+);
 
 function App() {
-  const AnnasToDoList = ["Buy groceries", "Clean the house", "Finish the project"];
-  const KonstantinasToDoList = ["Prepare presentation", "Attend meeting", "Submit report"];
+  const [user, setUser] = useState(Parse.User.current());
+
+  async function handleLogout() {
+    try {
+      await Parse.User.logOut();
+      setUser(null);
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  function handleAuthenticated(loggedInUser) {
+    setUser(loggedInUser);
+  }
+
+  if (!user) {
+    return <AuthPage onAuthenticated={handleAuthenticated} />;
+  }
 
   return (
     <>
-    <ToDoList firstname={"Anna"} todos={AnnasToDoList} />
-    <ToDoList firstname={"Konstantina"} todos={KonstantinasToDoList} />
-    <ToDoPanel firstname={"Lea"} >
-      <ol>
-        <li>Prepare Figma tutorial for next lecture</li>
-        <li>Prepare assignment</li>
-      </ol>
-    </ToDoPanel>
-
+      <ToDoList firstName={user.get("username")} />
+      <button onClick={handleLogout}>Logout</button>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
